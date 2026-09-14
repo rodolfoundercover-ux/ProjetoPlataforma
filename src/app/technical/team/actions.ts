@@ -18,10 +18,10 @@ type InvitationClient={from:(table:"agency_invitations")=>{insert:(row:Record<st
 export async function createInvitation(_previous:InvitationState,form:FormData):Promise<InvitationState>{
   const parsed=z.object({agencyId:z.uuid(),email:z.email().transform(x=>x.trim().toLowerCase()),memberRole:z.enum(["ADMIN","ANALYST"]),hours:z.coerce.number().int().min(1).max(168)}).safeParse({agencyId:form.get("agencyId"),email:form.get("email"),memberRole:form.get("memberRole"),hours:form.get("hours")});
   if(!parsed.success)return{error:"Confira os dados do convite."};
-  const client=await serverSupabase(); const {data}=await client.auth.getUser(); if(!data.user)return{error:"Sessão expirada."};
+  const client=await serverSupabase(); const {data}=await client.auth.getUser(); if(!data.user)return{error:"SessÃ£o expirada."};
   const token=randomBytes(32).toString("base64url"); const tokenHash=createHash("sha256").update(token).digest("hex");
   const {error}=await (client as unknown as InvitationClient).from("agency_invitations").insert({agency_id:parsed.data.agencyId,email:parsed.data.email,member_role:parsed.data.memberRole,invited_by:data.user.id,token_hash:tokenHash,expires_at:new Date(Date.now()+parsed.data.hours*3600000).toISOString()});
-  if(error)return{error:"Não foi possível criar o convite. Verifique sua permissão e se já existe convite pendente."};
+  if(error)return{error:"NÃ£o foi possÃ­vel criar o convite. Verifique sua permissÃ£o e se jÃ¡ existe convite pendente."};
   revalidatePath("/technical/team"); return{token};
 }
 export async function revokeInvitation(form:FormData):Promise<void>{

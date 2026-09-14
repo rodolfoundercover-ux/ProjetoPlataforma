@@ -1,10 +1,10 @@
 export type ErrorCode = "UNAUTHENTICATED" | "FORBIDDEN" | "INVALID_INPUT" | "UNAVAILABLE" | "INTERNAL";
 const messages: Record<ErrorCode, string> = {
   UNAUTHENTICATED: "Entre para continuar.",
-  FORBIDDEN: "Acesso não permitido.",
+  FORBIDDEN: "Acesso nÃ£o permitido.",
   INVALID_INPUT: "Confira os dados informados.",
-  UNAVAILABLE: "Serviço indisponível. Tente novamente.",
-  INTERNAL: "Não foi possível concluir a operação.",
+  UNAVAILABLE: "ServiÃ§o indisponÃ­vel. Tente novamente.",
+  INTERNAL: "NÃ£o foi possÃ­vel concluir a operaÃ§Ã£o.",
 };
 export class AppError extends Error {
   readonly code: ErrorCode;

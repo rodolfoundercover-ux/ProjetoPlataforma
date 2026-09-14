@@ -1,41 +1,53 @@
-"use server";
+﻿"use server";
 
-import { CustomerService } from "@/services/customer.service";
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache';
+import { CustomerService } from '@/services/customer.service';
+import { serverSupabase } from '@/lib/supabase/server';
 
 const customerService = new CustomerService();
 
-// Mock function to simulate getting agency ID from session
-async function getAgencyId(): Promise<string> {
-  return "agency_123"; // In production, this comes from auth.getUser()
+async function getAgencyId() {
+  const supabase = await serverSupabase();
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (error || !user) throw new Error('Unauthorized');
+
+  const { data: member, error: memberError } = await supabase
+    .from('agency_members')
+    .select('agency_id')
+    .eq('user_id', user.id)
+    .single();
+
+  if (memberError || !member) throw new Error('User not associated with any agency');
+  return member.agency_id;
 }
 
 export async function createCustomerAction(formData: FormData) {
-  const agencyId = await getAgencyId();
-  
-  const data = {
-    agency_id: agencyId,
-    full_name: formData.get("full_name") as string,
-    email: formData.get("email") as string,
-    phone: formData.get("phone") as string,
-    document: formData.get("document") as string,
-    birth_date: formData.get("birth_date") as string,
-  };
-
   try {
-    await customerService.createCustomer(data);
-    revalidatePath("/technical/customers");
-    return { success: true };
-  } catch (e: any) {
-    return { error: e.message };
+    const agencyId = await getAgencyId();
+    const rawFormData = Object.fromEntries(formData.entries());
+    
+    await customerService.createCustomer({
+      agency_id: agencyId,
+      full_name: rawFormData.full_name as string,
+      email: rawFormData.email as string,
+      phone: rawFormData.phone as string,
+      document: rawFormData.document as string,
+      birth_date: rawFormData.birth_date as string,
+    });
+
+    revalidatePath('/technical/customers');
+  } catch (error: any) {
+    console.error('Error creating customer:', error);
+    throw new Error(error.message || 'Failed to create customer');
   }
 }
 
 export async function listCustomersAction() {
-  const agencyId = await getAgencyId();
   try {
+    const agencyId = await getAgencyId();
     return await customerService.listCustomers(agencyId);
-  } catch (e: any) {
-    throw new Error(e.message);
+  } catch (error: any) {
+    console.error('Error listing customers:', error);
+    return [];
   }
 }

@@ -20,7 +20,7 @@ export class ReservationService {
     entry_amount: number;
     created_by: string;
   }) {
-    // Gerar código da reserva (ex: RES-2026-XXXX)
+    // Gerar cÃ³digo da reserva (ex: RES-2026-XXXX)
     const code = `RES-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const { data: reservation, error } = await this.supabase
@@ -39,7 +39,7 @@ export class ReservationService {
   }
 
   /**
-   * Adiciona um passageiro à reserva e solicita hold de vaga/assento.
+   * Adiciona um passageiro Ã  reserva e solicita hold de vaga/assento.
    * Implementa P04-01 e P04-03.
    */
   async addPassengerToReservation(data: {
@@ -60,7 +60,7 @@ export class ReservationService {
     seat_id: string | null;
     userId: string;
   }) {
-    // 1. Tentar criar o hold de assento/vaga primeiro (estratégia pessimista)
+    // 1. Tentar criar o hold de assento/vaga primeiro (estratÃ©gia pessimista)
     const hold = await this.capacityService.createHold(
       data.trip_id, 
       data.seat_id, 
@@ -101,7 +101,7 @@ export class ReservationService {
 
       return { resPassenger, hold };
     } catch (e) {
-      // Se falhar a criação do passageiro, liberamos o hold imediatamente
+      // Se falhar a criaÃ§Ã£o do passageiro, liberamos o hold imediatamente
       await this.capacityService.releaseHold(hold.id);
       throw e;
     }

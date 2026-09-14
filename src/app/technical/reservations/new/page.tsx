@@ -30,25 +30,25 @@ export default function NewReservationPage() {
     seatId: "",
   });
 
-  // Listas para Sele��o
+  // Listas para SeleÃ§Ã£o
   const [trips, setTrips] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
   const [passengersList, setPassengersList] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadInitialData() {
-      // Aqui buscar�amos de APIs reais. Simula��o de carregamento:
+      // Aqui buscarÃ­amos de APIs reais. SimulaÃ§Ã£o de carregamento:
       const resTrips = await fetch("/api/technical/trips"); // Exemplo
       // setTrips(await resTrips.json());
       
-      // Para fins de demo, usaremos dados simulados se as APIs n�o estiverem prontas
+      // Para fins de demo, usaremos dados simulados se as APIs nÃ£o estiverem prontas
       setTrips([
         { id: "trip-1", title: "Ubatuba 2026", code: "UBT-01" },
         { id: "trip-2", title: "Arraial do Cabo", code: "ARC-05" },
       ]);
       
       setCustomers([
-        { id: "cust-1", full_name: "Jo�o Silva" },
+        { id: "cust-1", full_name: "JoÃ£o Silva" },
         { id: "cust-2", full_name: "Maria Oliveira" },
       ]);
     }
@@ -93,7 +93,7 @@ export default function NewReservationPage() {
         category_id: currentPassenger.categoryId,
         category_name: "Adulto",
         boarding_point_id: currentPassenger.boardingPointId,
-        boarding_point_name: "Rodovi�ria Centro",
+        boarding_point_name: "RodoviÃ¡ria Centro",
         list_price: 100,
         sale_price: 100,
         discount_amount: 0,
@@ -140,7 +140,7 @@ export default function NewReservationPage() {
 
       {step === 1 && (
         <div className="p-6 border rounded-xl bg-card shadow-sm space-y-4">
-          <h2 className="text-lg font-semibold">Passo 1: Configura��es B�sicas</h2>
+          <h2 className="text-lg font-semibold">Passo 1: ConfiguraÃ§Ãµes BÃ¡sicas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Viagem</label>
@@ -162,7 +162,7 @@ export default function NewReservationPage() {
             disabled={loading}
             className="w-full bg-primary text-white p-3 rounded-lg font-bold hover:bg-primary/90"
           >
-            {loading ? "Processando..." : "Avan�ar para Passageiros"}
+            {loading ? "Processando..." : "AvanÃ§ar para Passageiros"}
           </button>
         </div>
       )}
@@ -223,7 +223,7 @@ export default function NewReservationPage() {
 
       {step === 3 && (
         <div className="p-6 border rounded-xl bg-card shadow-sm space-y-6">
-          <h2 className="text-lg font-semibold">Passo 3: Revis�o Final</h2>
+          <h2 className="text-lg font-semibold">Passo 3: RevisÃ£o Final</h2>
           <div className="space-y-4">
             <div className="flex justify-between border-b pb-2">
               <span>Viagem:</span>
@@ -261,4 +261,4 @@ export default function NewReservationPage() {
       )}
     </div>
   );
-}
+}

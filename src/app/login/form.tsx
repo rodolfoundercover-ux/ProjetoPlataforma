@@ -7,7 +7,7 @@ export function LoginForm() {
     <label>E-mail<input name="email" type="email" autoComplete="username" required maxLength={254} /></label>
     <label>Senha<input name="password" type="password" autoComplete="current-password" required maxLength={128} /></label>
     <p role="status" aria-live="polite">{state.error}</p>
-    <button disabled={pending} type="submit">{pending ? "Entrando…" : "Entrar"}</button>
+    <button disabled={pending} type="submit">{pending ? "Entrandoâ¦" : "Entrar"}</button>
   </form>;
 }
 

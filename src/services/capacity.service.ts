@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Tipos b·sicos para o serviÁo de capacidade
+// Tipos b√°sicos para o servi√ßo de capacidade
 export interface SeatHold {
   id: string;
   trip_id: string;
@@ -24,10 +24,10 @@ export class CapacityService {
 
   /**
    * Tenta criar um hold para um assento ou vaga geral.
-   * Implementa a regra P04-02: ProteÁ„o contra concorrÍncia.
+   * Implementa a regra P04-02: Prote√ß√£o contra concorr√™ncia.
    */
   async createHold(tripId: string, seatId: string | null, reservationId: string | null, userId: string, durationMinutes = 15) {
-    // 1. Verificar se existe hold ativo ou atribuiÁ„o definitiva
+    // 1. Verificar se existe hold ativo ou atribui√ß√£o definitiva
     const { data: existing, error: checkError } = await this.supabase
       .from('seat_holds')
       .select('id')
@@ -38,10 +38,10 @@ export class CapacityService {
 
     if (checkError) throw checkError;
     if (existing) {
-      throw new Error('Este assento j· est· reservado temporariamente.');
+      throw new Error('Este assento j√° est√° reservado temporariamente.');
     }
 
-    // Verificar se j· existe atribuiÁ„o definitiva
+    // Verificar se j√° existe atribui√ß√£o definitiva
     const { data: assigned, error: assignError } = await this.supabase
       .from('seat_assignments')
       .select('id')
@@ -52,7 +52,7 @@ export class CapacityService {
 
     if (assignError) throw assignError;
     if (assigned) {
-      throw new Error('Este assento j· est· ocupado definitivamente.');
+      throw new Error('Este assento j√° est√° ocupado definitivamente.');
     }
 
     // 2. Criar o hold
@@ -76,11 +76,11 @@ export class CapacityService {
   }
 
   /**
-   * Confirma o hold, transformando-o em uma atribuiÁ„o definitiva.
-   * Implementa a transiÁ„o de hold -> assignment.
+   * Confirma o hold, transformando-o em uma atribui√ß√£o definitiva.
+   * Implementa a transi√ß√£o de hold -> assignment.
    */
   async confirmHold(holdId: string, reservationPassengerId: string) {
-    // Em um cen·rio real, isso deveria ser um RPC no Supabase para ser atÙmico.
+    // Em um cen√°rio real, isso deveria ser um RPC no Supabase para ser at√¥mico.
     
     // 1. Buscar dados do hold
     const { data: hold, error: holdError } = await this.supabase
@@ -89,9 +89,9 @@ export class CapacityService {
       .eq('id', holdId)
       .single();
 
-    if (holdError || !hold) throw new Error('Hold n„o encontrado ou inv·lido.');
+    if (holdError || !hold) throw new Error('Hold n√£o encontrado ou inv√°lido.');
 
-    // 2. Criar a atribuiÁ„o definitiva
+    // 2. Criar a atribui√ß√£o definitiva
     const { data: assignment, error: assignError } = await this.supabase
       .from('seat_assignments')
       .insert({

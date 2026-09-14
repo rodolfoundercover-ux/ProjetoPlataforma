@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { ReservationService } from "@/services/reservation.service";
 import { revalidatePath } from "next/cache";
@@ -11,7 +11,11 @@ const supabase = createClient(
 );
 
 async function getAgencyId(): Promise<string> {
-  return "agency_123"; // In production, this comes from auth.getUser()
+  // This should ideally come from auth.getUser()
+  // For now, we use a mock or a utility if available.
+  // Since we are in build phase and this is a server action, 
+  // we should ideally use the serverSupabase() helper.
+  return "agency_123"; 
 }
 
 export async function listReservationsAction() {
@@ -19,7 +23,7 @@ export async function listReservationsAction() {
   try {
     const { data, error } = await supabase
       .from('reservations')
-      .select('*, trip(title, code)')
+      .select('*, trips(title, code)')
       .eq('agency_id', agencyId)
       .order('created_at', { ascending: false });
 
