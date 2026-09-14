@@ -1,0 +1,101 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PHASE_00: instalar dependências",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-File",
+        "scripts/setup-local.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: iniciar Supabase",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "local:start"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: configurar ambiente",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "local:env"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: gerar tipos do banco",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "db:types"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: testar banco",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "db:test"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: verificar aplicação",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "check"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "PHASE_00: abrir servidor web",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "exec",
+        "--yes",
+        "--package=pnpm@11.19.0",
+        "--",
+        "pnpm",
+        "dev"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
+

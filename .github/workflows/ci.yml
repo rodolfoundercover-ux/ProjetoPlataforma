@@ -1,0 +1,32 @@
+name: Platform checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require verified dependency lock
+        run: test -f pnpm-lock.yaml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm local:start
+      - run: pnpm local:env
+      - run: pnpm db:types
+      - run: git diff --exit-code -- src/lib/database.types.ts
+      - run: test -f src/lib/database.types.ts && git ls-files --error-unmatch src/lib/database.types.ts
+      - run: pnpm db:test
+      - run: pnpm check
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - if: always()
+        run: pnpm local:stop

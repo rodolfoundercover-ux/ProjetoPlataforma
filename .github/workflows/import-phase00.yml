@@ -1,0 +1,28 @@
+name: Import PHASE_00 package
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/import-phase00.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand the reviewed source package
+        run: |
+          unzip -o travel-platform-phase-00.zip
+          test ! -e .env
+          test ! -e .env.local
+          rm travel-platform-phase-00.zip
+      - name: Commit the expanded project
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Expand PHASE_00 implementation"
+          git push
