@@ -17,7 +17,7 @@ select has_function('public','create_manual_reservation',array['uuid','uuid','te
 select has_function('public','add_reservation_passenger',array['uuid','uuid','uuid','numeric','uuid'],'passenger and hold are transactional');
 select has_function('public','submit_reservation',array['uuid'],'submission is controlled by backend');
 select has_function('public','expire_reservations',array[]::text[],'backend expiry exists');
-select like((select proconfig::text from pg_proc where oid='public.add_reservation_passenger(uuid,uuid,uuid,numeric,uuid)'::regprocedure),'%extensions%','discount digest resolves in Supabase Cloud');
+select ok((select proconfig::text like '%extensions%' from pg_proc where oid='public.add_reservation_passenger(uuid,uuid,uuid,numeric,uuid)'::regprocedure),'discount digest resolves in Supabase Cloud');
 select ok((select relrowsecurity and relforcerowsecurity from pg_class where oid='public.reservations'::regclass),'reservation RLS is forced');
 select * from finish();
 rollback;
