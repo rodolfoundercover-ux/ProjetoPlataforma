@@ -37,7 +37,7 @@ export default async function ReservationsPage() {
             {reservations && reservations.length > 0 ? (
               reservations.map((res) => (
                 <tr key={res.id} className='border-b last:border-none hover:bg-muted/50'>
-                  <td className='py-3 font-mono font-bold'>{res.code}</td>
+                  <td className='py-3 font-mono font-bold'><Link href={`/technical/reservations/${res.id}`}>{res.code}</Link></td>
                   <td className='py-3'>Viagem vinculada</td>
                   <td className='py-3'>R$ {res.total_amount}</td>
                   <td className='py-3'>
