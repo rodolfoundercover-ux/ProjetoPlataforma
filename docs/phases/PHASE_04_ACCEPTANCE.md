@@ -1,6 +1,6 @@
 # Aceitação — PHASE_04: Clientes, passageiros e reservas
 
-Status: NÃO INICIADA. Este checklist não comprova implementação. Nenhum item veio previamente aprovado.
+Status: EM VALIDAÇÃO. A implementação foi corrigida; os resultados abaixo só serão aprovados após execução dos gates.
 
 | Critério | Evidência (teste/cenário, ambiente, resultado) | Situação |
 |---|---|---|

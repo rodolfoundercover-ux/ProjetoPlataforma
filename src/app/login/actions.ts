@@ -10,17 +10,17 @@ export async function login(_previous: { error: string }, form: FormData) {
   try {
     const client = await serverSupabase();
     const { error } = await client.auth.signInWithPassword(parsed.data);
-    if (error) return { error: "NÃ£o foi possÃ­vel entrar. Confira seus dados ou tente mais tarde." };
+    if (error) return { error: "Não foi possível entrar. Confira seus dados ou tente mais tarde." };
   } catch (error) {
     logError("login", error);
-    return { error: "ServiÃ§o indisponÃ­vel. Tente novamente." };
+    return { error: "Serviço indisponível. Tente novamente." };
   }
   redirect("/technical");
 }
 export async function logout() {
   const client = await serverSupabase();
   const { error } = await client.auth.signOut();
-  if (error) throw new Error("NÃ£o foi possÃ­vel encerrar a sessÃ£o.");
+  if (error) throw new Error("Não foi possível encerrar a sessão.");
   redirect("/login");
 }
 

@@ -53,7 +53,7 @@ export default async function CustomersPage() {
               </thead>
               <tbody>
                 {customers && customers.length > 0 ? (
-                  customers.map((customer: any) => (
+                  customers.map((customer) => (
                     <tr key={customer.id} className='border-b last:border-none hover:bg-muted/50'>
                       <td className='py-2'>{customer.full_name}</td>
                       <td className='py-2'>{customer.email}</td>

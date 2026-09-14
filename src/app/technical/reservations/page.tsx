@@ -35,10 +35,10 @@ export default async function ReservationsPage() {
           </thead>
           <tbody>
             {reservations && reservations.length > 0 ? (
-              reservations.map((res: any) => (
+              reservations.map((res) => (
                 <tr key={res.id} className='border-b last:border-none hover:bg-muted/50'>
                   <td className='py-3 font-mono font-bold'>{res.code}</td>
-                  <td className='py-3'>{res.trips?.title} ({res.trips?.code})</td>
+                  <td className='py-3'>Viagem vinculada</td>
                   <td className='py-3'>R$ {res.total_amount}</td>
                   <td className='py-3'>
                     <span className={`px-2 py-1 rounded-full text-xs ${res.status === 'CONFIRMED' ? 'bg-green-100 text-green-800' : res.status === 'WAITING_ENTRY' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'}`}>

@@ -2,9 +2,9 @@
 
 Pacote completo de documentação para implementação incremental com Codex, consolidado a partir da conversa “Analisar alerta do Defender”, com prevalência da auditoria G.1.
 
-**PHASE_00 iniciada: código da fundação criado, ainda sem instalação ou homologação completas.**
+**PHASE_00 a PHASE_03 aprovadas e publicadas. A PHASE_04 está em validação.**
 
-Para abrir no VS Code e executar localmente, siga [Desenvolvimento local](docs/LOCAL_DEVELOPMENT.md). Veja [STATUS.md](codex/STATUS.md) para testes realizados e bloqueios. Não há aplicação comercial pronta nem avanço para PHASE_01.
+Para abrir no VS Code e executar localmente, siga [Desenvolvimento local](docs/LOCAL_DEVELOPMENT.md). Veja [STATUS.md](codex/STATUS.md) para testes realizados, publicações e bloqueios.
 
 ## Começar
 
