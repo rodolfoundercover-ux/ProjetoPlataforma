@@ -42,7 +42,50 @@ export type Database = {
         }
         Relationships: []
       }
-    }
+    
+      agency_customers: {
+        Row: { id: string; agency_id: string; auth_user_id: string | null; full_name: string; email: string; phone: string | null; document: string; birth_date: string; status: string; created_at: string; updated_at: string; archived_at: string | null; },
+        Insert: { id?: string; agency_id: string; auth_user_id?: string | null; full_name: string; email: string; phone?: string | null; document: string; birth_date: string; status?: string; created_at?: string; updated_at?: string; archived_at?: string | null; },
+        Update: { id?: string; agency_id?: string; auth_user_id?: string | null; full_name?: string; email?: string; phone?: string | null; document?: string; birth_date?: string; status?: string; updated_at?: string; archived_at?: string | null; },
+        Relationships: [{ foreignKeyName: 'agency_customers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
+      },
+      agency_passengers: {
+        Row: { id: string; agency_id: string; owner_customer_id: string | null; linked_auth_user_id: string | null; full_name: string; document: string; birth_date: string; phone: string | null; status: string; created_at: string; updated_at: string; },
+        Insert: { id?: string; agency_id: string; owner_customer_id?: string | null; linked_auth_user_id?: string | null; full_name: string; document: string; birth_date: string; phone?: string | null; status?: string; created_at?: string; updated_at?: string; },
+        Update: { id?: string; agency_id?: string; owner_customer_id?: string | null; linked_auth_user_id?: string | null; full_name?: string; document?: string; birth_date?: string; phone?: string | null; status?: string; updated_at?: string; },
+        Relationships: [{ foreignKeyName: 'agency_passengers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
+      },
+      reservations: {
+        Row: { id: string; agency_id: string; trip_id: string; code: string; buyer_customer_id: string; status: string; financial_status: string; commercial_source: string; sales_channel: string; currency: string; subtotal: number; discount_total: number; client_fee_total: number; total_amount: number; entry_amount: number; hold_expires_at: string | null; confirmed_at: string | null; cancelled_at: string | null; expired_at: string | null; created_by: string | null; created_at: string; updated_at: string; },
+        Insert: { id?: string; agency_id: string; trip_id: string; code: string; buyer_customer_id: string; status?: string; financial_status?: string; commercial_source: string; sales_channel: string; currency?: string; subtotal?: number; discount_total?: number; client_fee_total?: number; total_amount?: number; entry_amount?: number; hold_expires_at?: string | null; confirmed_at?: string | null; cancelled_at?: string | null; expired_at?: string | null; created_by?: string | null; created_at?: string; updated_at?: string; },
+        Update: { id?: string; agency_id?: string; trip_id?: string; code?: string; buyer_customer_id?: string; status?: string; financial_status?: string; commercial_source?: string; sales_channel?: string; currency?: string; subtotal?: number; discount_total?: number; client_fee_total?: number; total_amount?: number; entry_amount?: number; hold_expires_at?: string | null; confirmed_at?: string | null; cancelled_at?: string | null; expired_at?: string | null; created_by?: string | null; created_at?: string; updated_at?: string; },
+        Relationships: [{ foreignKeyName: 'reservations_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'reservations_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
+      },
+      reservation_passengers: {
+        Row: { id: string; agency_id: string; reservation_id: string; trip_id: string; passenger_id: string | null; passenger_name_snapshot: string; document_snapshot: string; birth_date_snapshot: string; category_id: string; category_name_snapshot: string; boarding_point_id: string; boarding_snapshot: string; occupies_seat: boolean; list_price: number; sale_price: number; discount_amount: number; status: string; created_at: string; cancelled_at: string | null; },
+        Insert: { id?: string; agency_id: string; reservation_id: string; trip_id: string; passenger_id?: string | null; passenger_name_snapshot: string; document_snapshot: string; birth_date_snapshot: string; category_id: string; category_name_snapshot: string; boarding_point_id: string; boarding_snapshot: string; occupies_seat?: boolean; list_price: number; sale_price: number; discount_amount?: number; status?: string; created_at?: string; cancelled_at?: string | null; },
+        Update: { id?: string; agency_id?: string; reservation_id?: string; trip_id?: string; passenger_id?: string | null; passenger_name_snapshot?: string; document_snapshot?: string; birth_date_snapshot?: string; category_id?: string; category_name_snapshot?: string; boarding_point_id?: string; boarding_snapshot?: string; occupies_seat?: boolean; list_price?: number; sale_price?: number; discount_amount?: number; status?: string; created_at?: string; cancelled_at?: string | null; },
+        Relationships: [{ foreignKeyName: 'reservation_passengers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'reservation_passengers_reservation_id_fkey', columns: ['reservation_id'], isOneToOne: false, referencedRelation: 'reservations', referencedColumns: ['id'] }, { foreignKeyName: 'reservation_passengers_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
+      },
+      seat_holds: {
+        Row: { id: string; agency_id: string; trip_id: string; seat_id: string | null; reservation_id: string | null; created_by: string; expires_at: string; created_at: string; },
+        Insert: { id?: string; agency_id: string; trip_id: string; seat_id?: string | null; reservation_id?: string | null; created_by: string; expires_at: string; created_at?: string; },
+        Update: { id?: string; agency_id?: string; trip_id?: string; seat_id?: string | null; reservation_id?: string | null; created_by?: string; expires_at?: string; created_at?: string; },
+        Relationships: [{ foreignKeyName: 'seat_holds_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'seat_holds_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
+      },
+      seat_assignments: {
+        Row: { id: string; agency_id: string; trip_id: string; reservation_passenger_id: string; seat_id: string; assigned_at: string; released_at: string | null; release_reason: string | null; },
+        Insert: { id?: string; agency_id: string; trip_id: string; reservation_passenger_id: string; seat_id: string; assigned_at?: string; released_at?: string | null; release_reason?: string | null; },
+        Update: { id?: string; agency_id?: string; trip_id?: string; reservation_passenger_id?: string; seat_id?: string; assigned_at?: string; released_at?: string | null; release_reason?: string | null; },
+        Relationships: [{ foreignKeyName: 'seat_assignments_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'seat_assignments_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
+      },
+      approval_requests: {
+        Row: { id: string; agency_id: string; entity_type: string; entity_id: string; requested_by: string; reason: string; requested_value: number | null; normal_policy_result: string | null; exception_requested: string; status: string; approved_by: string | null; approved_at: string | null; created_at: string; updated_at: string; },
+        Insert: { id?: string; agency_id: string; entity_type: string; entity_id: string; requested_by: string; reason: string; requested_value?: number | null; normal_policy_result?: string | null; exception_requested: string; status?: string; approved_by?: string | null; approved_at?: string | null; created_at?: string; updated_at?: string; },
+        Update: { id?: string; agency_id?: string; entity_type?: string; entity_id?: string; requested_by?: string; reason?: string; requested_value?: number | null; normal_policy_result?: string | null; exception_requested?: string; status?: string; approved_by?: string | null; approved_at?: string | null; created_at?: string; updated_at?: string; },
+        Relationships: [{ foreignKeyName: 'approval_requests_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
+      },
+}
     Views: {
       [_ in never]: never
     }
@@ -1705,7 +1748,9 @@ export const Constants = {
         "CANCELLED",
         "COMPLETED",
       ],
-    },
+
+    }   },
   },
 } as const
+
 
