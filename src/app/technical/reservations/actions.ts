@@ -10,8 +10,12 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+async function getAgencyId(): Promise<string> {
+  return "agency_123"; // In production, this comes from auth.getUser()
+}
+
 export async function listReservationsAction() {
-  const agencyId = "PLACEHOLDER_AGENCY_ID"; // From session
+  const agencyId = await getAgencyId();
   try {
     const { data, error } = await supabase
       .from('reservations')
@@ -27,7 +31,7 @@ export async function listReservationsAction() {
 }
 
 export async function createReservationAction(formData: FormData) {
-  const agencyId = "PLACEHOLDER_AGENCY_ID";
+  const agencyId = await getAgencyId();
   
   const data = {
     agency_id: agencyId,

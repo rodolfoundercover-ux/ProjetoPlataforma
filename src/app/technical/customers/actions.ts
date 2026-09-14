@@ -5,8 +5,13 @@ import { revalidatePath } from "next/cache";
 
 const customerService = new CustomerService();
 
+// Mock function to simulate getting agency ID from session
+async function getAgencyId(): Promise<string> {
+  return "agency_123"; // In production, this comes from auth.getUser()
+}
+
 export async function createCustomerAction(formData: FormData) {
-  const agencyId = "PLACEHOLDER_AGENCY_ID"; // This should come from the user session/auth
+  const agencyId = await getAgencyId();
   
   const data = {
     agency_id: agencyId,
@@ -27,7 +32,7 @@ export async function createCustomerAction(formData: FormData) {
 }
 
 export async function listCustomersAction() {
-  const agencyId = "PLACEHOLDER_AGENCY_ID"; // This should come from user session/auth
+  const agencyId = await getAgencyId();
   try {
     return await customerService.listCustomers(agencyId);
   } catch (e: any) {
