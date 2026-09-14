@@ -19,7 +19,7 @@ export async function listReservationsAction() {
   try {
     const { data, error } = await supabase
       .from('reservations')
-      .select('*, trip(title, code)")
+      .select('*, trip(title, code)')
       .eq('agency_id', agencyId)
       .order('created_at', { ascending: false });
 
