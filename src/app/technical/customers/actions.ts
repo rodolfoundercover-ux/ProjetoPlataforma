@@ -1,41 +1,4 @@
-"use server";
-
-import { CustomerService } from "@/services/customer.service";
-import { revalidatePath } from "next/cache";
-
-const customerService = new CustomerService();
-
-// Mock function to simulate getting agency ID from session
-async function getAgencyId(): Promise<string> {
-  return "agency_123"; // In production, this comes from auth.getUser()
-}
-
-export async function createCustomerAction(formData: FormData) {
-  const agencyId = await getAgencyId();
-  
-  const data = {
-    agency_id: agencyId,
-    full_name: formData.get("full_name") as string,
-    email: formData.get("email") as string,
-    phone: formData.get("phone") as string,
-    document: formData.get("document") as string,
-    birth_date: formData.get("birth_date") as string,
-  };
-
-  try {
-    await customerService.createCustomer(data);
-    revalidatePath("/technical/customers");
-    return { success: true };
-  } catch (e: any) {
-    return { error: e.message };
-  }
-}
-
-export async function listCustomersAction() {
-  const agencyId = await getAgencyId();
-  try {
-    return await customerService.listCustomers(agencyId);
-  } catch (e: any) {
-    throw new Error(e.message);
-  }
-}
+"use server";import {revalidatePath} from "next/cache";import {z} from "zod";import {serverSupabase} from "@/lib/supabase/server";
+async function agency(){const db=await serverSupabase();const {data:{user}}=await db.auth.getUser();if(!user)return null;const {data}=await db.from("agency_members").select("agency_id").eq("user_id",user.id).eq("status","ACTIVE").limit(1).maybeSingle();return data?.agency_id??null;}
+export async function createCustomerAction(form:FormData){const a=await agency();const p=z.object({full_name:z.string().trim().min(2).max(160),email:z.email(),phone:z.string().trim().max(40),document:z.string().trim().min(3).max(40),birth_date:z.iso.date()}).safeParse(Object.fromEntries(form));if(!a||!p.success)return;const db=await serverSupabase();const {error}=await db.from("agency_customers").insert({agency_id:a,...p.data});if(!error)revalidatePath("/technical/customers");}
+export async function listCustomersAction(){const db=await serverSupabase();const {data}=await db.from("agency_customers").select("id,full_name,email,document,status").eq("status","ACTIVE").order("full_name");return data??[];}

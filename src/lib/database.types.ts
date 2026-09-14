@@ -42,50 +42,7 @@ export type Database = {
         }
         Relationships: []
       }
-    
-      agency_customers: {
-        Row: { id: string; agency_id: string; auth_user_id: string | null; full_name: string; email: string; phone: string | null; document: string; birth_date: string; status: string; created_at: string; updated_at: string; archived_at: string | null; },
-        Insert: { id?: string; agency_id: string; auth_user_id?: string | null; full_name: string; email: string; phone?: string | null; document: string; birth_date: string; status?: string; created_at?: string; updated_at?: string; archived_at?: string | null; },
-        Update: { id?: string; agency_id?: string; auth_user_id?: string | null; full_name?: string; email?: string; phone?: string | null; document?: string; birth_date?: string; status?: string; updated_at?: string; archived_at?: string | null; },
-        Relationships: [{ foreignKeyName: 'agency_customers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
-      },
-      agency_passengers: {
-        Row: { id: string; agency_id: string; owner_customer_id: string | null; linked_auth_user_id: string | null; full_name: string; document: string; birth_date: string; phone: string | null; status: string; created_at: string; updated_at: string; },
-        Insert: { id?: string; agency_id: string; owner_customer_id?: string | null; linked_auth_user_id?: string | null; full_name: string; document: string; birth_date: string; phone?: string | null; status?: string; created_at?: string; updated_at?: string; },
-        Update: { id?: string; agency_id?: string; owner_customer_id?: string | null; linked_auth_user_id?: string | null; full_name?: string; document?: string; birth_date?: string; phone?: string | null; status?: string; updated_at?: string; },
-        Relationships: [{ foreignKeyName: 'agency_passengers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
-      },
-      reservations: {
-        Row: { id: string; agency_id: string; trip_id: string; code: string; buyer_customer_id: string; status: string; financial_status: string; commercial_source: string; sales_channel: string; currency: string; subtotal: number; discount_total: number; client_fee_total: number; total_amount: number; entry_amount: number; hold_expires_at: string | null; confirmed_at: string | null; cancelled_at: string | null; expired_at: string | null; created_by: string | null; created_at: string; updated_at: string; },
-        Insert: { id?: string; agency_id: string; trip_id: string; code: string; buyer_customer_id: string; status?: string; financial_status?: string; commercial_source: string; sales_channel: string; currency?: string; subtotal?: number; discount_total?: number; client_fee_total?: number; total_amount?: number; entry_amount?: number; hold_expires_at?: string | null; confirmed_at?: string | null; cancelled_at?: string | null; expired_at?: string | null; created_by?: string | null; created_at?: string; updated_at?: string; },
-        Update: { id?: string; agency_id?: string; trip_id?: string; code?: string; buyer_customer_id?: string; status?: string; financial_status?: string; commercial_source?: string; sales_channel?: string; currency?: string; subtotal?: number; discount_total?: number; client_fee_total?: number; total_amount?: number; entry_amount?: number; hold_expires_at?: string | null; confirmed_at?: string | null; cancelled_at?: string | null; expired_at?: string | null; created_by?: string | null; created_at?: string; updated_at?: string; },
-        Relationships: [{ foreignKeyName: 'reservations_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'reservations_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
-      },
-      reservation_passengers: {
-        Row: { id: string; agency_id: string; reservation_id: string; trip_id: string; passenger_id: string | null; passenger_name_snapshot: string; document_snapshot: string; birth_date_snapshot: string; category_id: string; category_name_snapshot: string; boarding_point_id: string; boarding_snapshot: string; occupies_seat: boolean; list_price: number; sale_price: number; discount_amount: number; status: string; created_at: string; cancelled_at: string | null; },
-        Insert: { id?: string; agency_id: string; reservation_id: string; trip_id: string; passenger_id?: string | null; passenger_name_snapshot: string; document_snapshot: string; birth_date_snapshot: string; category_id: string; category_name_snapshot: string; boarding_point_id: string; boarding_snapshot: string; occupies_seat?: boolean; list_price: number; sale_price: number; discount_amount?: number; status?: string; created_at?: string; cancelled_at?: string | null; },
-        Update: { id?: string; agency_id?: string; reservation_id?: string; trip_id?: string; passenger_id?: string | null; passenger_name_snapshot?: string; document_snapshot?: string; birth_date_snapshot?: string; category_id?: string; category_name_snapshot?: string; boarding_point_id?: string; boarding_snapshot?: string; occupies_seat?: boolean; list_price?: number; sale_price?: number; discount_amount?: number; status?: string; created_at?: string; cancelled_at?: string | null; },
-        Relationships: [{ foreignKeyName: 'reservation_passengers_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'reservation_passengers_reservation_id_fkey', columns: ['reservation_id'], isOneToOne: false, referencedRelation: 'reservations', referencedColumns: ['id'] }, { foreignKeyName: 'reservation_passengers_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
-      },
-      seat_holds: {
-        Row: { id: string; agency_id: string; trip_id: string; seat_id: string | null; reservation_id: string | null; created_by: string; expires_at: string; created_at: string; },
-        Insert: { id?: string; agency_id: string; trip_id: string; seat_id?: string | null; reservation_id?: string | null; created_by: string; expires_at: string; created_at?: string; },
-        Update: { id?: string; agency_id?: string; trip_id?: string; seat_id?: string | null; reservation_id?: string | null; created_by?: string; expires_at?: string; created_at?: string; },
-        Relationships: [{ foreignKeyName: 'seat_holds_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'seat_holds_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
-      },
-      seat_assignments: {
-        Row: { id: string; agency_id: string; trip_id: string; reservation_passenger_id: string; seat_id: string; assigned_at: string; released_at: string | null; release_reason: string | null; },
-        Insert: { id?: string; agency_id: string; trip_id: string; reservation_passenger_id: string; seat_id: string; assigned_at?: string; released_at?: string | null; release_reason?: string | null; },
-        Update: { id?: string; agency_id?: string; trip_id?: string; reservation_passenger_id?: string; seat_id?: string; assigned_at?: string; released_at?: string | null; release_reason?: string | null; },
-        Relationships: [{ foreignKeyName: 'seat_assignments_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }, { foreignKeyName: 'seat_assignments_trip_id_fkey', columns: ['trip_id'], isOneToOne: false, referencedRelation: 'trips', referencedColumns: ['id'] }],
-      },
-      approval_requests: {
-        Row: { id: string; agency_id: string; entity_type: string; entity_id: string; requested_by: string; reason: string; requested_value: number | null; normal_policy_result: string | null; exception_requested: string; status: string; approved_by: string | null; approved_at: string | null; created_at: string; updated_at: string; },
-        Insert: { id?: string; agency_id: string; entity_type: string; entity_id: string; requested_by: string; reason: string; requested_value?: number | null; normal_policy_result?: string | null; exception_requested: string; status?: string; approved_by?: string | null; approved_at?: string | null; created_at?: string; updated_at?: string; },
-        Update: { id?: string; agency_id?: string; entity_type?: string; entity_id?: string; requested_by?: string; reason?: string; requested_value?: number | null; normal_policy_result?: string | null; exception_requested?: string; status?: string; approved_by?: string | null; approved_at?: string | null; created_at?: string; updated_at?: string; },
-        Relationships: [{ foreignKeyName: 'approval_requests_agency_id_fkey', columns: ['agency_id'], isOneToOne: false, referencedRelation: 'agencies', referencedColumns: ['id'] }],
-      },
-}
+    }
     Views: {
       [_ in never]: never
     }
@@ -271,24 +228,48 @@ export type Database = {
       agency_customers: {
         Row: {
           agency_id: string
-          auth_user_id: string
+          archived_at: string | null
+          auth_user_id: string | null
+          birth_date: string | null
           created_at: string
-          display_name: string
+          display_name: string | null
+          document: string | null
+          email: string | null
+          full_name: string | null
           id: string
+          phone: string | null
+          status: string
+          updated_at: string
         }
         Insert: {
           agency_id: string
-          auth_user_id: string
+          archived_at?: string | null
+          auth_user_id?: string | null
+          birth_date?: string | null
           created_at?: string
-          display_name: string
+          display_name?: string | null
+          document?: string | null
+          email?: string | null
+          full_name?: string | null
           id?: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
         }
         Update: {
           agency_id?: string
-          auth_user_id?: string
+          archived_at?: string | null
+          auth_user_id?: string | null
+          birth_date?: string | null
           created_at?: string
-          display_name?: string
+          display_name?: string | null
+          document?: string | null
+          email?: string | null
+          full_name?: string | null
           id?: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -543,6 +524,63 @@ export type Database = {
           },
         ]
       }
+      agency_passengers: {
+        Row: {
+          agency_id: string
+          birth_date: string
+          created_at: string
+          document: string
+          full_name: string
+          id: string
+          linked_auth_user_id: string | null
+          owner_customer_id: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agency_id: string
+          birth_date: string
+          created_at?: string
+          document: string
+          full_name: string
+          id?: string
+          linked_auth_user_id?: string | null
+          owner_customer_id?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agency_id?: string
+          birth_date?: string
+          created_at?: string
+          document?: string
+          full_name?: string
+          id?: string
+          linked_auth_user_id?: string | null
+          owner_customer_id?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agency_passengers_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agency_passengers_agency_id_owner_customer_id_fkey"
+            columns: ["agency_id", "owner_customer_id"]
+            isOneToOne: false
+            referencedRelation: "agency_customers"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
       agency_settings: {
         Row: {
           agency_id: string
@@ -581,6 +619,72 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "agencies"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      approval_requests: {
+        Row: {
+          agency_id: string
+          context_hash: string
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          expires_at: string
+          id: string
+          list_price: number
+          passenger_id: string | null
+          reason: string
+          requested_by: string
+          requested_sale_price: number
+          reservation_id: string
+          status: string
+        }
+        Insert: {
+          agency_id: string
+          context_hash: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          expires_at: string
+          id?: string
+          list_price: number
+          passenger_id?: string | null
+          reason: string
+          requested_by: string
+          requested_sale_price: number
+          reservation_id: string
+          status?: string
+        }
+        Update: {
+          agency_id?: string
+          context_hash?: string
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          expires_at?: string
+          id?: string
+          list_price?: number
+          passenger_id?: string | null
+          reason?: string
+          requested_by?: string
+          requested_sale_price?: number
+          reservation_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "approval_requests_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "approval_requests_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
           },
         ]
       }
@@ -807,6 +911,389 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      reservation_passengers: {
+        Row: {
+          agency_id: string
+          birth_date_snapshot: string
+          boarding_point_id: string
+          boarding_snapshot: string
+          cancelled_at: string | null
+          category_id: string
+          category_name_snapshot: string
+          created_at: string
+          discount_amount: number | null
+          document_snapshot: string
+          id: string
+          list_price: number
+          occupies_seat: boolean
+          passenger_id: string | null
+          passenger_name_snapshot: string
+          reservation_id: string
+          sale_price: number
+          status: string
+          trip_id: string
+        }
+        Insert: {
+          agency_id: string
+          birth_date_snapshot: string
+          boarding_point_id: string
+          boarding_snapshot: string
+          cancelled_at?: string | null
+          category_id: string
+          category_name_snapshot: string
+          created_at?: string
+          discount_amount?: number | null
+          document_snapshot: string
+          id?: string
+          list_price: number
+          occupies_seat: boolean
+          passenger_id?: string | null
+          passenger_name_snapshot: string
+          reservation_id: string
+          sale_price: number
+          status?: string
+          trip_id: string
+        }
+        Update: {
+          agency_id?: string
+          birth_date_snapshot?: string
+          boarding_point_id?: string
+          boarding_snapshot?: string
+          cancelled_at?: string | null
+          category_id?: string
+          category_name_snapshot?: string
+          created_at?: string
+          discount_amount?: number | null
+          document_snapshot?: string
+          id?: string
+          list_price?: number
+          occupies_seat?: boolean
+          passenger_id?: string | null
+          passenger_name_snapshot?: string
+          reservation_id?: string
+          sale_price?: number
+          status?: string
+          trip_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservation_passengers_agency_id_boarding_point_id_fkey"
+            columns: ["agency_id", "boarding_point_id"]
+            isOneToOne: false
+            referencedRelation: "trip_boarding_points"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_category_id_fkey"
+            columns: ["agency_id", "category_id"]
+            isOneToOne: false
+            referencedRelation: "passenger_categories"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_passenger_id_fkey"
+            columns: ["agency_id", "passenger_id"]
+            isOneToOne: false
+            referencedRelation: "agency_passengers"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "public_trip_catalog"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_passengers_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      reservations: {
+        Row: {
+          agency_id: string
+          buyer_customer_id: string
+          cancelled_at: string | null
+          code: string
+          commercial_source: string
+          confirmed_at: string | null
+          created_at: string
+          created_by: string
+          currency: string
+          discount_total: number
+          entry_amount: number
+          expired_at: string | null
+          expires_at: string
+          financial_status: Database["public"]["Enums"]["reservation_financial_status"]
+          id: string
+          sales_channel: string
+          status: Database["public"]["Enums"]["reservation_status"]
+          subtotal: number
+          total_amount: number
+          trip_id: string
+          updated_at: string
+        }
+        Insert: {
+          agency_id: string
+          buyer_customer_id: string
+          cancelled_at?: string | null
+          code: string
+          commercial_source: string
+          confirmed_at?: string | null
+          created_at?: string
+          created_by: string
+          currency?: string
+          discount_total?: number
+          entry_amount?: number
+          expired_at?: string | null
+          expires_at: string
+          financial_status?: Database["public"]["Enums"]["reservation_financial_status"]
+          id?: string
+          sales_channel: string
+          status?: Database["public"]["Enums"]["reservation_status"]
+          subtotal?: number
+          total_amount?: number
+          trip_id: string
+          updated_at?: string
+        }
+        Update: {
+          agency_id?: string
+          buyer_customer_id?: string
+          cancelled_at?: string | null
+          code?: string
+          commercial_source?: string
+          confirmed_at?: string | null
+          created_at?: string
+          created_by?: string
+          currency?: string
+          discount_total?: number
+          entry_amount?: number
+          expired_at?: string | null
+          expires_at?: string
+          financial_status?: Database["public"]["Enums"]["reservation_financial_status"]
+          id?: string
+          sales_channel?: string
+          status?: Database["public"]["Enums"]["reservation_status"]
+          subtotal?: number
+          total_amount?: number
+          trip_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservations_agency_id_buyer_customer_id_fkey"
+            columns: ["agency_id", "buyer_customer_id"]
+            isOneToOne: false
+            referencedRelation: "agency_customers"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservations_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservations_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "public_trip_catalog"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservations_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      sales_attributions: {
+        Row: {
+          agency_id: string
+          channel: string
+          created_at: string
+          id: string
+          reservation_id: string
+          source: string
+        }
+        Insert: {
+          agency_id: string
+          channel: string
+          created_at?: string
+          id?: string
+          reservation_id: string
+          source: string
+        }
+        Update: {
+          agency_id?: string
+          channel?: string
+          created_at?: string
+          id?: string
+          reservation_id?: string
+          source?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_attributions_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sales_attributions_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: true
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      seat_assignments: {
+        Row: {
+          agency_id: string
+          assigned_at: string
+          id: string
+          release_reason: string | null
+          released_at: string | null
+          reservation_passenger_id: string
+          seat_id: string
+          trip_id: string
+        }
+        Insert: {
+          agency_id: string
+          assigned_at?: string
+          id?: string
+          release_reason?: string | null
+          released_at?: string | null
+          reservation_passenger_id: string
+          seat_id: string
+          trip_id: string
+        }
+        Update: {
+          agency_id?: string
+          assigned_at?: string
+          id?: string
+          release_reason?: string | null
+          released_at?: string | null
+          reservation_passenger_id?: string
+          seat_id?: string
+          trip_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seat_assignments_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seat_assignments_agency_id_reservation_passenger_id_fkey"
+            columns: ["agency_id", "reservation_passenger_id"]
+            isOneToOne: false
+            referencedRelation: "reservation_passengers"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "seat_assignments_agency_id_seat_id_fkey"
+            columns: ["agency_id", "seat_id"]
+            isOneToOne: false
+            referencedRelation: "trip_seats"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      seat_holds: {
+        Row: {
+          agency_id: string
+          created_at: string
+          created_by: string
+          expires_at: string
+          id: string
+          reservation_id: string
+          seat_id: string | null
+          trip_id: string
+        }
+        Insert: {
+          agency_id: string
+          created_at?: string
+          created_by: string
+          expires_at: string
+          id?: string
+          reservation_id: string
+          seat_id?: string | null
+          trip_id: string
+        }
+        Update: {
+          agency_id?: string
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          id?: string
+          reservation_id?: string
+          seat_id?: string | null
+          trip_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seat_holds_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seat_holds_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "seat_holds_agency_id_seat_id_fkey"
+            columns: ["agency_id", "seat_id"]
+            isOneToOne: false
+            referencedRelation: "trip_seats"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "seat_holds_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "public_trip_catalog"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "seat_holds_agency_id_trip_id_fkey"
+            columns: ["agency_id", "trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
       }
       site_trip_publications: {
         Row: {
@@ -1525,6 +2012,16 @@ export type Database = {
     }
     Functions: {
       accept_agency_invitation: { Args: { raw_token: string }; Returns: string }
+      add_reservation_passenger: {
+        Args: {
+          p_boarding: string
+          p_passenger: string
+          p_reservation: string
+          p_sale_price: number
+          p_seat?: string
+        }
+        Returns: string
+      }
       age_on_date: {
         Args: { birth_date: string; reference_date: string }
         Returns: number
@@ -1538,10 +2035,21 @@ export type Database = {
         }
         Returns: string
       }
+      create_manual_reservation: {
+        Args: {
+          p_buyer: string
+          p_channel: string
+          p_expires_at: string
+          p_source: string
+          p_trip: string
+        }
+        Returns: string
+      }
       duplicate_trip: {
         Args: { p_code: string; p_slug: string; p_trip: string }
         Returns: string
       }
+      expire_reservations: { Args: never; Returns: number }
       has_agency_permission: {
         Args: { required_key: string; target_agency: string }
         Returns: boolean
@@ -1554,6 +2062,10 @@ export type Database = {
           agency_id: string
           hostname: string
         }[]
+      }
+      submit_reservation: {
+        Args: { p_reservation: string }
+        Returns: undefined
       }
       trip_price_for_birth_date: {
         Args: { p_birth_date: string; p_trip: string }
@@ -1581,6 +2093,19 @@ export type Database = {
       license_status: "ACTIVE" | "SUSPENDED" | "CANCELLED"
       member_role: "ADMIN" | "ANALYST"
       member_status: "ACTIVE" | "INACTIVE"
+      reservation_financial_status:
+        | "PENDING"
+        | "PARTIALLY_PAID"
+        | "ENTRY_PAID"
+        | "PAID"
+        | "REFUNDED"
+      reservation_status:
+        | "DRAFT"
+        | "WAITING_ENTRY"
+        | "CONFIRMED"
+        | "CANCELLED"
+        | "EXPIRED"
+        | "COMPLETED"
       site_publication_status: "DRAFT" | "PUBLISHED" | "UNPUBLISHED"
       ssl_status: "PENDING" | "ISSUING" | "ACTIVE" | "ERROR"
       trip_cost_type: "FIXED" | "PER_PASSENGER"
@@ -1738,6 +2263,21 @@ export const Constants = {
       license_status: ["ACTIVE", "SUSPENDED", "CANCELLED"],
       member_role: ["ADMIN", "ANALYST"],
       member_status: ["ACTIVE", "INACTIVE"],
+      reservation_financial_status: [
+        "PENDING",
+        "PARTIALLY_PAID",
+        "ENTRY_PAID",
+        "PAID",
+        "REFUNDED",
+      ],
+      reservation_status: [
+        "DRAFT",
+        "WAITING_ENTRY",
+        "CONFIRMED",
+        "CANCELLED",
+        "EXPIRED",
+        "COMPLETED",
+      ],
       site_publication_status: ["DRAFT", "PUBLISHED", "UNPUBLISHED"],
       ssl_status: ["PENDING", "ISSUING", "ACTIVE", "ERROR"],
       trip_cost_type: ["FIXED", "PER_PASSENGER"],
@@ -1748,9 +2288,7 @@ export const Constants = {
         "CANCELLED",
         "COMPLETED",
       ],
-
-    }   },
+    },
   },
 } as const
-
 

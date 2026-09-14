@@ -1,6 +1,6 @@
 # PHASE_04 — Clientes, passageiros e reservas
 
-Status: NÃO INICIADA. Fonte de sequência: F.2; escopo corrigido por G.1.
+Status: EM VALIDAÇÃO. Fonte de sequência: F.2; escopo corrigido por G.1.
 Dependência principal: PHASE_03 concluída. Ler o contexto global antes de executar.
 
 ## Objetivo e escopo
