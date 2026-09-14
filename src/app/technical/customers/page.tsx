@@ -1,9 +1,9 @@
 ﻿export const dynamic = 'force-dynamic';
-import { listCustomersAction, createCustomerAction } from './actions';
+import { listCustomersAction, createCustomerAction, createPassengerAction, listPassengersAction } from './actions';
 import React from 'react';
 
 export default async function CustomersPage() {
-  const customers = await listCustomersAction();
+  const [customers,passengers] = await Promise.all([listCustomersAction(),listPassengersAction()]);
   return (
     <div className='p-6 space-y-6'>
       <div>
@@ -76,6 +76,20 @@ export default async function CustomersPage() {
             </table>
           </div>
         </div>
+      </div>
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+        <div className='p-4 border rounded-lg bg-card shadow-sm'>
+          <h2 className='text-lg font-semibold mb-4'>Novo Passageiro</h2>
+          <form action={createPassengerAction} className='space-y-4'>
+            <label className='block text-sm font-medium'>Responsável/Comprador<select name='owner_customer_id' className='w-full p-2 border rounded bg-background'><option value=''>Sem vínculo</option>{customers.map(c=><option key={c.id} value={c.id}>{c.full_name}</option>)}</select></label>
+            <label className='block text-sm font-medium'>Nome Completo<input name='full_name' required className='w-full p-2 border rounded bg-background'/></label>
+            <label className='block text-sm font-medium'>CPF/Documento<input name='document' required className='w-full p-2 border rounded bg-background'/></label>
+            <label className='block text-sm font-medium'>Data de Nascimento<input name='birth_date' type='date' required className='w-full p-2 border rounded bg-background'/></label>
+            <label className='block text-sm font-medium'>Telefone<input name='phone' className='w-full p-2 border rounded bg-background'/></label>
+            <button type='submit' className='w-full bg-primary text-white p-2 rounded'>Cadastrar Passageiro</button>
+          </form>
+        </div>
+        <div className='md:col-span-2 p-4 border rounded-lg bg-card shadow-sm'><h2 className='text-lg font-semibold mb-4'>Passageiros Cadastrados</h2>{passengers.length===0?<p>Nenhum passageiro encontrado.</p>:<table className='w-full text-left text-sm'><thead><tr><th>Nome</th><th>Documento</th><th>Nascimento</th></tr></thead><tbody>{passengers.map(p=><tr key={p.id}><td className='py-2'>{p.full_name}</td><td>{p.document}</td><td>{new Date(`${p.birth_date}T00:00:00`).toLocaleDateString('pt-BR')}</td></tr>)}</tbody></table>}</div>
       </div>
     </div>
   );
