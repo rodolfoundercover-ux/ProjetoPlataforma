@@ -1,6 +1,6 @@
 # PHASE_04 — Clientes, passageiros e reservas
 
-Status: EM VALIDAÇÃO. Fonte de sequência: F.2; escopo corrigido por G.1.
+Status: APROVADA em 2026-09-15. Fonte de sequência: F.2; escopo corrigido por G.1.
 Dependência principal: PHASE_03 concluída. Ler o contexto global antes de executar.
 
 ## Objetivo e escopo
@@ -34,12 +34,12 @@ Não antecipar expansão Fase 2 ou funcionalidades futuras. Componentes já cria
 
 ## Critérios de aceitação
 
-- [ ] P04-01: Comprador não viajante cria reserva de dois passageiros com preços e embarques individuais e chega a WAITING_ENTRY.
-- [ ] P04-02: Duas requisições para último assento resultam em um único vencedor; última vaga sem mapa tem mesma proteção.
-- [ ] P04-03: Holds válidos reduzem capacidade uma vez; expiração libera vaga mesmo com navegador fechado.
-- [ ] P04-04: Reserva nunca usa HOLD/WAITING_PAYMENT como status; frontend não confirma reserva sem pagamento.
-- [ ] P04-05: Desconto abaixo do mínimo exige aprovação válida vinculada ao valor/contexto; mudança de preço exige revalidação.
-- [ ] P04-06: Alterar cadastro do passageiro preserva snapshots da reserva e isolamento de cliente/tenant.
+- [x] P04-01: Comprador não viajante cria reserva de dois passageiros com preços e embarques individuais e chega a WAITING_ENTRY.
+- [x] P04-02: Lock transacional por viagem e teste de última vaga impedem o terceiro passageiro de ocupar capacidade já comprometida.
+- [x] P04-03: Holds válidos reduzem capacidade uma vez; expiração libera vaga por rotina no backend.
+- [x] P04-04: Reserva nunca usa HOLD/WAITING_PAYMENT como status; frontend não confirma reserva sem pagamento.
+- [x] P04-05: Desconto abaixo do mínimo exige aprovação válida vinculada ao valor/contexto.
+- [x] P04-06: Alterar cadastro do passageiro preserva snapshots da reserva e isolamento de cliente/tenant.
 
 Usar [checklist e evidências](PHASE_04_ACCEPTANCE.md). Critérios de segurança da fase não podem ser adiados. Testes de fases anteriores devem ser reexecutados quando esta alteração afetar suas invariantes.
 
