@@ -688,6 +688,60 @@ export type Database = {
           },
         ]
       }
+      charges: {
+        Row: {
+          agency_id: string
+          amount: number
+          cancelled_at: string | null
+          charge_type: Database["public"]["Enums"]["charge_type"]
+          created_at: string
+          due_date: string | null
+          id: string
+          paid_at: string | null
+          reservation_id: string
+          status: Database["public"]["Enums"]["charge_status"]
+        }
+        Insert: {
+          agency_id: string
+          amount: number
+          cancelled_at?: string | null
+          charge_type: Database["public"]["Enums"]["charge_type"]
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          paid_at?: string | null
+          reservation_id: string
+          status?: Database["public"]["Enums"]["charge_status"]
+        }
+        Update: {
+          agency_id?: string
+          amount?: number
+          cancelled_at?: string | null
+          charge_type?: Database["public"]["Enums"]["charge_type"]
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          paid_at?: string | null
+          reservation_id?: string
+          status?: Database["public"]["Enums"]["charge_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charges_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "charges_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
       features: {
         Row: {
           created_at: string
@@ -799,6 +853,314 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "agencies"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_adjustments: {
+        Row: {
+          adjustment_type: string
+          agency_id: string
+          amount: number
+          created_at: string
+          created_by: string | null
+          id: string
+          payment_id: string
+          reason: string
+        }
+        Insert: {
+          adjustment_type: string
+          agency_id: string
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          payment_id: string
+          reason: string
+        }
+        Update: {
+          adjustment_type?: string
+          agency_id?: string
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          payment_id?: string
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_adjustments_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_adjustments_agency_id_payment_id_fkey"
+            columns: ["agency_id", "payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      payment_allocations: {
+        Row: {
+          agency_id: string
+          amount: number
+          charge_id: string
+          created_at: string
+          id: string
+          payment_id: string
+        }
+        Insert: {
+          agency_id: string
+          amount: number
+          charge_id: string
+          created_at?: string
+          id?: string
+          payment_id: string
+        }
+        Update: {
+          agency_id?: string
+          amount?: number
+          charge_id?: string
+          created_at?: string
+          id?: string
+          payment_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_allocations_agency_id_charge_id_fkey"
+            columns: ["agency_id", "charge_id"]
+            isOneToOne: false
+            referencedRelation: "charges"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "payment_allocations_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_allocations_agency_id_payment_id_fkey"
+            columns: ["agency_id", "payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      payment_reconciliation_exceptions: {
+        Row: {
+          agency_id: string
+          code: string
+          created_at: string
+          id: string
+          payment_id: string
+          reservation_id: string
+          resolved_at: string | null
+        }
+        Insert: {
+          agency_id: string
+          code: string
+          created_at?: string
+          id?: string
+          payment_id: string
+          reservation_id: string
+          resolved_at?: string | null
+        }
+        Update: {
+          agency_id?: string
+          code?: string
+          created_at?: string
+          id?: string
+          payment_id?: string
+          reservation_id?: string
+          resolved_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_reconciliation_exceptions_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_reconciliation_exceptions_agency_id_payment_id_fkey"
+            columns: ["agency_id", "payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "payment_reconciliation_exceptions_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      payment_transactions: {
+        Row: {
+          agency_id: string
+          amount: number
+          created_at: string
+          external_reference: string
+          id: string
+          occurred_at: string | null
+          payment_id: string
+          provider: Database["public"]["Enums"]["payment_provider"]
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Insert: {
+          agency_id: string
+          amount: number
+          created_at?: string
+          external_reference: string
+          id?: string
+          occurred_at?: string | null
+          payment_id: string
+          provider: Database["public"]["Enums"]["payment_provider"]
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Update: {
+          agency_id?: string
+          amount?: number
+          created_at?: string
+          external_reference?: string
+          id?: string
+          occurred_at?: string | null
+          payment_id?: string
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_transactions_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_transactions_agency_id_payment_id_fkey"
+            columns: ["agency_id", "payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      payment_webhook_events: {
+        Row: {
+          error_code: string | null
+          external_event_id: string
+          id: string
+          payload_digest: string
+          payment_id: string | null
+          processed_at: string | null
+          processing_status: Database["public"]["Enums"]["webhook_processing_status"]
+          provider: Database["public"]["Enums"]["payment_provider"]
+          received_at: string
+        }
+        Insert: {
+          error_code?: string | null
+          external_event_id: string
+          id?: string
+          payload_digest: string
+          payment_id?: string | null
+          processed_at?: string | null
+          processing_status?: Database["public"]["Enums"]["webhook_processing_status"]
+          provider: Database["public"]["Enums"]["payment_provider"]
+          received_at?: string
+        }
+        Update: {
+          error_code?: string | null
+          external_event_id?: string
+          id?: string
+          payload_digest?: string
+          payment_id?: string | null
+          processed_at?: string | null
+          processing_status?: Database["public"]["Enums"]["webhook_processing_status"]
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          received_at?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          account_scope: Database["public"]["Enums"]["payment_account_scope"]
+          agency_fee_amount: number
+          agency_id: string
+          amount: number
+          client_fee_amount: number
+          confirmed_at: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          idempotency_key: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_payment_id: string | null
+          rejected_at: string | null
+          reservation_id: string
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Insert: {
+          account_scope?: Database["public"]["Enums"]["payment_account_scope"]
+          agency_fee_amount?: number
+          agency_id: string
+          amount: number
+          client_fee_amount?: number
+          confirmed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          idempotency_key: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_payment_id?: string | null
+          rejected_at?: string | null
+          reservation_id: string
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Update: {
+          account_scope?: Database["public"]["Enums"]["payment_account_scope"]
+          agency_fee_amount?: number
+          agency_id?: string
+          amount?: number
+          client_fee_amount?: number
+          confirmed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          idempotency_key?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          provider_payment_id?: string | null
+          rejected_at?: string | null
+          reservation_id?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
           },
         ]
       }
@@ -1025,6 +1387,54 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "trips"
             referencedColumns: ["agency_id", "id"]
+          },
+        ]
+      }
+      reservation_payment_deadline_exceptions: {
+        Row: {
+          agency_id: string
+          allowed_until: string
+          approved_by: string
+          created_at: string
+          id: string
+          reason: string
+          reservation_id: string
+          revoked_at: string | null
+        }
+        Insert: {
+          agency_id: string
+          allowed_until: string
+          approved_by: string
+          created_at?: string
+          id?: string
+          reason: string
+          reservation_id: string
+          revoked_at?: string | null
+        }
+        Update: {
+          agency_id?: string
+          allowed_until?: string
+          approved_by?: string
+          created_at?: string
+          id?: string
+          reason?: string
+          reservation_id?: string
+          revoked_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservation_payment_deadline_exce_agency_id_reservation_id_fkey"
+            columns: ["agency_id", "reservation_id"]
+            isOneToOne: false
+            referencedRelation: "reservations"
+            referencedColumns: ["agency_id", "id"]
+          },
+          {
+            foreignKeyName: "reservation_payment_deadline_exceptions_agency_id_fkey"
+            columns: ["agency_id"]
+            isOneToOne: false
+            referencedRelation: "agencies"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -2035,6 +2445,30 @@ export type Database = {
         }
         Returns: string
       }
+      authorize_reservation_payment_deadline: {
+        Args: {
+          p_allowed_until: string
+          p_reason: string
+          p_reservation: string
+        }
+        Returns: string
+      }
+      configure_reservation_balance: {
+        Args: {
+          p_first_due_date?: string
+          p_installments: number
+          p_reservation: string
+        }
+        Returns: number
+      }
+      configure_reservation_charges: {
+        Args: {
+          p_due_date?: string
+          p_entry_amount: number
+          p_reservation: string
+        }
+        Returns: string
+      }
       create_manual_reservation: {
         Args: {
           p_buyer: string
@@ -2056,6 +2490,26 @@ export type Database = {
       }
       is_active_member: { Args: { target_agency: string }; Returns: boolean }
       is_agency_customer: { Args: { target_agency: string }; Returns: boolean }
+      record_provider_confirmation: {
+        Args: {
+          p_amount: number
+          p_external_event_id: string
+          p_external_reference: string
+          p_payload_digest: string
+          p_payment_id: string
+          p_provider: Database["public"]["Enums"]["payment_provider"]
+        }
+        Returns: string
+      }
+      refresh_charge_status: { Args: { p_charge: string }; Returns: undefined }
+      refresh_reservation_financial_status: {
+        Args: { p_reservation: string }
+        Returns: undefined
+      }
+      register_cash_payment: {
+        Args: { p_amount: number; p_charge: string; p_idempotency_key: string }
+        Returns: string
+      }
       resolve_verified_agency: {
         Args: { host_name: string }
         Returns: {
@@ -2077,6 +2531,14 @@ export type Database = {
       }
     }
     Enums: {
+      charge_status: "OPEN" | "PARTIALLY_PAID" | "PAID" | "CANCELLED"
+      charge_type:
+        | "ENTRY"
+        | "INSTALLMENT"
+        | "ADDITIONAL_CHARGE"
+        | "CANCELLATION_FEE"
+        | "PASSENGER_CHANGE_FEE"
+        | "OTHER"
       cost_allocation_type:
         | "DIRECT_PER_PASSENGER"
         | "SHARED"
@@ -2093,6 +2555,16 @@ export type Database = {
       license_status: "ACTIVE" | "SUSPENDED" | "CANCELLED"
       member_role: "ADMIN" | "ANALYST"
       member_status: "ACTIVE" | "INACTIVE"
+      payment_account_scope: "AGENCY" | "MARKETPLACE"
+      payment_method: "PIX" | "CARD" | "PAYMENT_LINK" | "CASH"
+      payment_provider: "MERCADO_PAGO" | "INFINITE_PAY" | "CASH"
+      payment_status:
+        | "PENDING"
+        | "CONFIRMED"
+        | "REJECTED"
+        | "REVERSED"
+        | "REFUNDED"
+        | "EXCEPTION"
       reservation_financial_status:
         | "PENDING"
         | "PARTIALLY_PAID"
@@ -2115,6 +2587,7 @@ export type Database = {
         | "SALES_CLOSED"
         | "CANCELLED"
         | "COMPLETED"
+      webhook_processing_status: "RECEIVED" | "PROCESSED" | "IGNORED" | "FAILED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2245,6 +2718,15 @@ export const Constants = {
   },
   public: {
     Enums: {
+      charge_status: ["OPEN", "PARTIALLY_PAID", "PAID", "CANCELLED"],
+      charge_type: [
+        "ENTRY",
+        "INSTALLMENT",
+        "ADDITIONAL_CHARGE",
+        "CANCELLATION_FEE",
+        "PASSENGER_CHANGE_FEE",
+        "OTHER",
+      ],
       cost_allocation_type: [
         "DIRECT_PER_PASSENGER",
         "SHARED",
@@ -2263,6 +2745,17 @@ export const Constants = {
       license_status: ["ACTIVE", "SUSPENDED", "CANCELLED"],
       member_role: ["ADMIN", "ANALYST"],
       member_status: ["ACTIVE", "INACTIVE"],
+      payment_account_scope: ["AGENCY", "MARKETPLACE"],
+      payment_method: ["PIX", "CARD", "PAYMENT_LINK", "CASH"],
+      payment_provider: ["MERCADO_PAGO", "INFINITE_PAY", "CASH"],
+      payment_status: [
+        "PENDING",
+        "CONFIRMED",
+        "REJECTED",
+        "REVERSED",
+        "REFUNDED",
+        "EXCEPTION",
+      ],
       reservation_financial_status: [
         "PENDING",
         "PARTIALLY_PAID",
@@ -2288,6 +2781,7 @@ export const Constants = {
         "CANCELLED",
         "COMPLETED",
       ],
+      webhook_processing_status: ["RECEIVED", "PROCESSED", "IGNORED", "FAILED"],
     },
   },
 } as const

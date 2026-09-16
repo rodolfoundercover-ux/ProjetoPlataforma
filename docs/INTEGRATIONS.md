@@ -1284,3 +1284,11 @@ precisa retry prioritário
 ```
 
 ---
+
+## Estado atual da Phase 05
+
+O banco registra cobranças, pagamentos em dinheiro autorizados, idempotência e conciliação. A interface de saldo cria cobranças parceladas exatas e não atribui taxa comercial estimada.
+
+Mercado Pago e InfinitePay permanecem desabilitados até que cada agência tenha uma conta e uma referência segura de credencial configuradas, além do adapter autenticado validado no ambiente do provider. A ausência desses itens retorna erro explícito; não cria checkout falso e não confirma uma reserva. O `FakePaymentProvider` existe exclusivamente para testes controlados e retorna somente `PENDING`.
+
+Para habilitar um provider em produção, registrar na área **Configurações → Integrações** apenas uma referência de segredo (por exemplo, um identificador de cofre), configurar o segredo no ambiente seguro de execução e validar criação, consulta e webhook com sandbox/documentação oficial. Nunca salvar tokens, PAN ou CVV no banco, em arquivos `.env` versionados ou nos logs.

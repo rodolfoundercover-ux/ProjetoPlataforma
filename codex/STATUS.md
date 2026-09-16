@@ -1,6 +1,6 @@
 # Estado da implementação
 
-Atualizado em 2026-09-15. A PHASE_00 até a PHASE_04 estão validadas. A PHASE_05 pode ser iniciada.
+Atualizado em 2026-09-15. A PHASE_00 até a PHASE_04 estão validadas. A PHASE_05 está em implementação.
 
 | Fase | Título | Situação | Evidência principal |
 |---|---|---|---|
@@ -9,7 +9,7 @@ Atualizado em 2026-09-15. A PHASE_00 até a PHASE_04 estão validadas. A PHASE_0
 | PHASE_02 | Agência, branding e configurações | APROVADA | Commit `4c3e80d`; CI `34880713513` aprovada; Supabase Cloud e Vercel validados |
 | PHASE_03 | Viagens, veículos e assentos | APROVADA | Commit `20cf3cf`; 80 testes pgTAP e gates aprovados; Supabase Cloud e Vercel validados |
 | PHASE_04 | Clientes, passageiros e reservas | APROVADA | Banco limpo, 110 testes pgTAP, fluxos de capacidade, expiração, desconto e snapshots validados |
-| PHASE_05 | Motor financeiro e pagamentos | NÃO INICIADA | — |
+| PHASE_05 | Motor financeiro e pagamentos | EM IMPLEMENTAÇÃO | Base financeira versionada: cobranças, pagamentos, alocações, idempotência, conciliação e calendário de quitação por reserva |
 | PHASE_06 | Contratos, políticas e assinatura | NÃO INICIADA | — |
 | PHASE_07 | Site white-label, checkout e cliente | NÃO INICIADA | — |
 | PHASE_08 | Pós-venda, reembolso e crédito | NÃO INICIADA | — |

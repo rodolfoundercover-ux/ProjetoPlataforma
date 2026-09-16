@@ -1,6 +1,6 @@
 # PHASE_05 — Motor financeiro e pagamentos
 
-Status: NÃO INICIADA. Fonte de sequência: F.2; escopo corrigido por G.1.
+Status: EM IMPLEMENTAÇÃO desde 2026-09-15. Fonte de sequência: F.2; escopo corrigido por G.1.
 Dependência principal: PHASE_04 concluída. Ler o contexto global antes de executar.
 
 ## Objetivo e escopo
